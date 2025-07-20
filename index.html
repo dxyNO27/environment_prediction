@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>金耳生长环境变量预测系统</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .menu {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+        .menu li {
+            margin: 10px 0;
+        }
+        .menu a {
+            text-decoration: none;
+            color: #333;
+            font-size: 18px;
+            padding: 10px;
+            display: block;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .menu a:hover {
+            background-color: #f1f1f1;
+        }
+        .submenu {
+            margin-left: 20px;
+        }
+        .data {
+            margin-left: 40px;
+        }
+        .data div {
+            margin: 10px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 8px;
+            text-align: center;
+        }
+        img {
+            width: 100%;
+            max-width: 300px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>金耳生长环境变量预测系统</h1>
+    </header>
+    
+    <div class="container">
+        <ul class="menu">
+            <li><a href="javascript:void(0);" onclick="showSubmenu('genetic')">原基期</a>
+                <ul id="genetic" class="submenu" style="display:none;">
+                    <li><a href="javascript:void(0);" onclick="showData('genetic_temp')">温度</a></li>
+                    <li><a href="javascript:void(0);" onclick="showData('genetic_humidity')">湿度</a></li>
+                    <li><a href="javascript:void(0);" onclick="showData('genetic_co2')">二氧化碳浓度</a></li>
+                </ul>
+            </li>
+            <li><a href="javascript:void(0);" onclick="showSubmenu('differentiation')">分化期</a>
+                <ul id="differentiation" class="submenu" style="display:none;">
+                    <li><a href="javascript:void(0);" onclick="showData('differentiation_temp')">温度</a></li>
+                    <li><a href="javascript:void(0);" onclick="showData('differentiation_humidity')">湿度</a></li>
+                    <li><a href="javascript:void(0);" onclick="showData('differentiation_co2')">二氧化碳浓度</a></li>
+                </ul>
+            </li>
+            <li><a href="javascript:void(0);" onclick="showSubmenu('coloration')">转色期</a>
+                <ul id="coloration" class="submenu" style="display:none;">
+                    <li><a href="javascript:void(0);" onclick="showData('coloration_temp')">温度</a></li>
+                    <li><a href="javascript:void(0);" onclick="showData('coloration_humidity')">湿度</a></li>
+                    <li><a href="javascript:void(0);" onclick="showData('coloration_co2')">二氧化碳浓度</a></li>
+                </ul>
+            </li>
+            <li><a href="javascript:void(0);" onclick="showSubmenu('harvest')">采收期</a>
+                <ul id="harvest" class="submenu" style="display:none;">
+                    <li><a href="javascript:void(0);" onclick="showData('harvest_temp')">温度</a></li>
+                    <li><a href="javascript:void(0);" onclick="showData('harvest_humidity')">湿度</a></li>
+                    <li><a href="javascript:void(0);" onclick="showData('harvest_co2')">二氧化碳浓度</a></li>
+                </ul>
+            </li>
+        </ul>
+        
+        <div id="data_display" class="data">
+            <h3>数据展示</h3>
+            <div id="data_content"></div>
+        </div>
+    </div>
+
+    <script>
+        function showSubmenu(period) {
+            const submenu = document.getElementById(period);
+            if (submenu.style.display === "none" || submenu.style.display === "") {
+                submenu.style.display = "block";
+            } else {
+                submenu.style.display = "none";
+            }
+        }
+
+        function showData(dataType) {
+            let content = "";
+            let image = "" ;
+            switch(dataType) {
+                case 'genetic_temp':
+                    content = "<h4>原基期 - 温度数据</h4><table><tr><th></th><th>ANN</th><th>LSTM</th><th>THA-LSTM</th></tr><tr><td>RMSE</td><td>0.0472</td><td>0.0430</td><td>0.0425</td></tr><tr><td>MAPE</td><td>0.1442%</td><td>0.1303%</td><td>0.1282%</td></tr><tr><td>Rf</td><td>98.3852%</td><td>98.6625%</td><td>98.6950%</td></tr></table><h4>原基期ANN温度预测曲线</h4><img src='https://i.imgs.ovh/2025/07/20/MP3rc.png'><h4>原基期LSTM温度预测曲线</h4><img src='https://i.imgs.ovh/2025/07/20/MPBUF.png'><h4>原基期THA_LSTM温度预测曲线</h4><img src='https://i.imgs.ovh/2025/07/20/MQoqO.png'>";
+                    break;
+                case 'genetic_humidity':
+                    content = "<h4>原基期 - 湿度数据</h4><table><tr><th></th><th>ANN</th><th>LSTM</th><th>THA-LSTM</th></tr><tr><td>RMSE</td><td>0.3379</td><td>0.2084</td><td>0.2125</td></tr><tr><td>MAPE</td><td>0.2269%</td><td>0.1624%</td><td>0.1775%</td></tr><tr><td>Rf</td><td>99.5494%</td><td>99.8286%</td><td>99.8224%</td></tr></table><h4>原基期ANN湿度预测曲线</h4><img src='https://i.imgs.ovh/2025/07/20/MQ7OO.png'><h4>原基期LSTM湿度预测曲线</h4><img src='https://i.imgs.ovh/2025/07/20/MQqs4.png'><h4>原基期THA_LSTM湿度预测曲线</h4><img src='https://i.imgs.ovh/2025/07/20/MQYZ6.png'>";
+                    break;
+                case 'genetic_co2':
+                    content = "<h4>原基期 - 二氧化碳浓度数据</h4><table><tr><th></th><th>ANN</th><th>LSTM</th><th>THA-LSTM</th></tr><tr><td>RMSE</td><td>29.9866</td><td>11.9823</td><td>13.8069</td></tr><tr><td>MAPE</td><td>1.8497%</td><td>0.8391%</td><td>1.0593%</td></tr><tr><td>Rf</td><td>99.5957%</td><td>99.9384%</td><td>99.9172%</td></tr></table><h4>原基期ANN二氧化碳浓度预测曲线</h4><img src='https://i.imgs.ovh/2025/07/20/MQCgd.png'><h4>原基期LSTM二氧化碳浓度预测曲线</h4><img src='https://i.imgs.ovh/2025/07/20/MQkvC.png'><h4>原基期THA_LSTM二氧化碳浓度预测曲线</h4><img src='https://i.imgs.ovh/2025/07/20/MQHpp.png'>";
+                    break;
+                case 'differentiation_temp':
+                    content = "<h4>分化期 - 温度数据</h4><table><tr><th></th><th>ANN</th><th>LSTM</th><th>THA-LSTM</th></tr><tr><td>RMSE</td><td>0.0453</td><td>0.0433</td><td>0.0437</td></tr><tr><td>MAPE</td><td>0.1438%</td><td>0.1291%</td><td>0.1315%</td></tr><tr><td>Rf</td><td>97.0752%</td><td>97.3306%</td><td>97.2778%</td></tr></table><h4>分化期ANN温度预测曲线</h4><img src='https://i.imgs.ovh/2025/07/20/MQaUY.png' ><h4>分化期LSTM温度预测曲线</h4><img src='https://i.imgs.ovh/2025/07/20/MQRxq.png'><h4>分化期THA_LSTM温度预测曲线</h4><img src='https://i.imgs.ovh/2025/07/20/MQ29c.png'>";
+                    break;
+                case 'differentiation_humidity':
+                    content = "<h4>分化期 - 湿度数据</h4><table><tr><th></th><th>ANN</th><th>LSTM</th><th>THA-LSTM</th></tr><tr><td>RMSE</td><td>0.2682</td><td>0.2047</td><td>0.2044</td></tr><tr><td>MAPE</td><td>0.1899%</td><td>0.1601%</td><td>0.1635%</td></tr><tr><td>Rf</td><td>98.4927%</td><td>99.1216%</td><td>99.1248%</td></tr></table><h4>分化期ANN湿度预测曲线</h4><img src='https://i.imgs.ovh/2025/07/20/MQON0.png'><h4>分化期LSTM湿度预测曲线</h4><img src='https://i.imgs.ovh/2025/07/20/MQAWt.png'><h4>分化期THA_LSTM湿度预测曲线</h4><img src='https://i.imgs.ovh/2025/07/20/MQnv9.png' >";
+                    break;
+                case 'differentiation_co2':
+                    content = "<h4>分化期 - 二氧化碳浓度数据</h4><table><tr><th></th><th>ANN</th><th>LSTM</th><th>THA-LSTM</th></tr><tr><td>RMSE</td><td>18.4217</td><td>9.2571</td><td>9.3669</td></tr><tr><td>MAPE</td><td>1.0372%</td><td>0.6631%</td><td>0.7042%</td></tr><tr><td>Rf</td><td>99.8502%</td><td>99.9622%</td><td>99.9615%</td></tr></table><h4>分化期ANN二氧化碳浓度预测曲线</h4><img src='https://i.imgs.ovh/2025/07/20/MQyog.png' ><h4>分化期LSTM二氧化碳浓度预测曲线<img src='https://i.imgs.ovh/2025/07/20/MQzVa.png' ><h4>分化期THA_LSTM二氧化碳浓度预测曲线</h4><img src='https://i.imgs.ovh/2025/07/20/MQQxm.png'>";
+                    break;
+                case 'coloration_temp':
+                    content = "<h4>转色期 - 温度数据</h4><table><tr><th></th><th>ANN</th><th>LSTM</th><th>THA-LSTM</th></tr><tr><td>RMSE</td><td>0.0446</td><td>0.0418</td><td>0.0418</td></tr><tr><td>MAPE</td><td>0.1449%</td><td>0.1389%</td><td>0.1399%</td></tr><tr><td>Rf</td><td>97.9334%</td><td>98.1909%</td><td>98.1852%</td></tr></table><h4>转色期ANN温度预测曲线</h4><img src='https://i.imgs.ovh/2025/07/20/MQrrn.png'><h4>转色期LSTM温度预测曲线</h4><img src='https://i.imgs.ovh/2025/07/20/MQs4U.png'><h4>转色期THA_LSTM温度预测曲线</h4><img src='https://i.imgs.ovh/2025/07/20/MQlb0.png' >";
+                    break;
+                case 'coloration_humidity':
+                    content = "<h4>转色期 - 湿度数据</h4><table><tr><th></th><th>ANN</th><th>LSTM</th><th>THA-LSTM</th></tr><tr><td>RMSE</td><td>0.1784</td><td>0.1338</td><td>0.1352</td></tr><tr><td>MAPE</td><td>0.1322%</td><td>0.1048%</td><td>0.1093%</td></tr><tr><td>Rf</td><td>99.2261%</td><td>99.5672%</td><td>99.5575%</td></tr></table><h4>转色期ANN湿度预测曲线</h4><img src='https://i.imgs.ovh/2025/07/20/MQcu1.png'><h4>转色期LSTM湿度预测曲线</h4><img src='https://i.imgs.ovh/2025/07/20/MQ8ON.png' ><h4>转色期THA_LSTM湿度预测曲线</h4><img src='https://i.imgs.ovh/2025/07/20/MQEig.png' >";
+                    break;
+                case 'coloration_co2':
+                    content = "<h4>转色期 - 二氧化碳浓度数据</h4><table><tr><th></th><th>ANN</th><th>LSTM</th><th>THA-LSTM</th></tr><tr><td>RMSE</td><td>32.4498</td><td>21.9696</td><td>21.1728</td></tr><tr><td>MAPE</td><td>0.8558%</td><td>0.7956%</td><td>0.7409%</td></tr><tr><td>Rf</td><td>99.5458%</td><td>99.7918%</td><td>99.8071%</td></tr></table><h4>转色期ANN二氧化碳浓度预测曲线</h4><img src='https://i.imgs.ovh/2025/07/20/MQjWb.png' ><h4>转色期LSTM二氧化碳浓度预测曲线<img src='https://i.imgs.ovh/2025/07/20/MQ5pA.png' ><h4>转色期THA_LSTM二氧化碳浓度预测曲线</h4><img src='https://i.imgs.ovh/2025/07/20/MQ44d.png'>";
+                    break;
+                case 'harvest_temp':
+                    content = "<h4>采收期 - 温度数据</h4><table><tr><th></th><th>ANN</th><th>LSTM</th><th>THA-LSTM</th></tr><tr><td>RMSE</td><td>0.0441</td><td>0.0403</td><td>0.0403</td></tr><tr><td>MAPE</td><td>0.1230%</td><td>0.1092%</td><td>0.1118%</td></tr><tr><td>Rf</td><td>99.5913%</td><td>99.6583%</td><td>99.6575%</td></tr></table><h4>采收期ANN温度预测曲线</h4><img src='https://i.imgs.ovh/2025/07/20/MWOaA.png' ><h4>采收期LSTM温度预测曲线</h4><img src='https://i.imgs.ovh/2025/07/20/MQVNe.png' ><h4>采收期THA_LSTM温度预测曲线</h4><img src='https://i.imgs.ovh/2025/07/20/MQMVQ.png' >";
+                    break;
+                case 'harvest_humidity':
+                    content = "<h4>采收期 - 湿度数据</h4><table><tr><th></th><th>ANN</th><th>LSTM</th><th>THA-LSTM</th></tr><tr><td>RMSE</td><td>0.2290</td><td>0.1584</td><td>0.1596</td></tr><tr><td>MAPE</td><td>0.1413%</td><td>0.0908%</td><td>0.0931%</td></tr><tr><td>Rf</td><td>88.2484%</td><td>94.3819%</td><td>94.2952%</td></tr></table><h4>采收期ANN湿度预测曲线</h4><img src='https://i.imgs.ovh/2025/07/20/MQFKx.png' ><h4>采收期LSTM湿度预测曲线</h4><img src='https://i.imgs.ovh/2025/07/20/MQUoh.png' ><h4>采收期THA_LSTM湿度预测曲线</h4><img src='https://i.imgs.ovh/2025/07/20/MQ9NX.png'>";
+                    break;
+                case 'harvest_co2':
+                    content = "<h4>采收期 - 二氧化碳浓度数据</h4><table><tr><th></th><th>ANN</th><th>LSTM</th><th>THA-LSTM</th></tr><tr><td>RMSE</td><td>40.8906</td><td>33.5639</td><td>35.2761</td></tr><tr><td>MAPE</td><td>1.0117%</td><td>1.0281%</td><td>1.0295%</td></tr><tr><td>Rf</td><td>93.6015%</td><td>95.7072%</td><td>95.2231%</td></tr></table><h4>采收期ANN二氧化碳浓度预测曲线</h4><img src='https://i.imgs.ovh/2025/07/20/MQvsL.png' ><h4>采收期LSTM二氧化碳浓度预测曲线</h4><img src='https://i.imgs.ovh/2025/07/20/MQTkr.png' ><h4>采收期THA_LSTM二氧化碳浓度预测曲线</h4><img src='https://i.imgs.ovh/2025/07/20/MQekH.png'>";
+                    break;
+            }
+            document.getElementById('data_content').innerHTML = content;
+        }
+    </script>
+</body>
+</html>
